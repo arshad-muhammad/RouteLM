@@ -1,0 +1,8 @@
+{
+  "name": "RouteLM",
+  "description": "Production-grade AI gateway & routing infrastructure optimized for latency, cost, and intelligence tradeoff with provider failover.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
