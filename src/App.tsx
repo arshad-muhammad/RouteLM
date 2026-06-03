@@ -11,11 +11,12 @@ import UnifiedApiGateway from "./components/UnifiedApiGateway";
 import BillingManager from "./components/BillingManager";
 import TeamsManager from "./components/TeamsManager";
 import DeveloperDocs from "./components/DeveloperDocs";
-import { Play, Sparkles, Terminal, Activity, DollarSign, Clock, ShieldAlert, Cpu, ExternalLink, Settings2, Code, Key, ChevronLeft, Users, Link2, BookOpen, Lock, ShieldCheck } from "lucide-react";
+import { Play, Sparkles, Terminal, Activity, DollarSign, Clock, ShieldAlert, Cpu, ExternalLink, Settings2, Code, Key, ChevronLeft, Users, Link2, BookOpen, Lock, ShieldCheck, Menu, X } from "lucide-react";
 
 export default function App() {
   const [viewMode, setViewMode] = useState<"marketing" | "auth" | "console">("marketing");
   const [operatorEmail, setOperatorEmail] = useState("muhd.arshadra@gmail.com");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"playground" | "analytics" | "keys" | "failovers" | "logs" | "connections" | "gateway" | "billing" | "teams" | "docs">("playground");
   const [metrics, setMetrics] = useState<SystemMetrics>({
     totalRequests: 0,
@@ -243,8 +244,209 @@ export default function App() {
 
   return (
     <div className="flex h-screen w-screen bg-[#09090B] text-[#FAFAFA] font-sans overflow-hidden select-none">
-      {/* Sidebar Navigation */}
-      <aside className="w-64 border-r border-[#27272A] flex flex-col bg-[#09090B] shrink-0 h-full">
+      {/* Mobile Sidebar Overlay (Drawer) */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-50 flex lg:hidden">
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/70 backdrop-blur-xs transition-opacity duration-300"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          {/* Menu Drawer */}
+          <div className="relative w-64 max-w-xs bg-[#09090B] border-r border-[#27272A] h-full flex flex-col z-10 animate-fade-in">
+            <div className="p-5 flex items-center justify-between border-b border-[#27272A]/60">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-white rounded flex items-center justify-center text-[#09090B] font-bold tracking-tighter shrink-0">
+                  R
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-semibold tracking-tight text-sm text-[#FAFAFA] leading-tight">RouteLM</span>
+                  <span className="text-[10px] font-mono text-[#71717A] tracking-wider uppercase font-medium font-bold">Console v2.4.9</span>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-1 px-2 text-[#71717A] hover:text-white rounded hover:bg-neutral-800 transition"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
+              <button
+                onClick={() => {
+                  setViewMode("marketing");
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded mb-4 text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white transition-all text-left text-[11px] font-mono font-bold border border-neutral-900 cursor-pointer"
+              >
+                <ChevronLeft className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
+                <span>← PRODUCT PORTAL</span>
+              </button>
+
+              <div className="text-[10px] uppercase tracking-widest text-[#71717A] px-3 mb-2 font-bold font-mono">Infrastructure</div>
+              
+              <button
+                onClick={() => {
+                  setActiveTab("playground");
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
+                  activeTab === "playground" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
+                }`}
+              >
+                <Terminal className="w-4 h-4 text-cyan-400 shrink-0" />
+                <span className="text-xs">Router Console</span>
+              </button>
+              
+              <button
+                onClick={() => {
+                  setActiveTab("analytics");
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
+                  activeTab === "analytics" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
+                }`}
+              >
+                <Activity className="w-4 h-4 text-purple-400 shrink-0" />
+                <span className="text-xs">Telemetry Analytics</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setActiveTab("connections");
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
+                  activeTab === "connections" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
+                }`}
+              >
+                <Link2 className="w-4 h-4 text-cyan-400 shrink-0" />
+                <span className="text-xs">Provider Connections</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setActiveTab("logs");
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
+                  activeTab === "logs" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
+                }`}
+              >
+                <Code className="w-4 h-4 text-blue-400 shrink-0" />
+                <span className="text-xs">Audit Rail Logs</span>
+                <span className="ml-auto text-[9px] font-mono bg-[#18181B] border border-[#27272A] px-1.5 py-0.5 rounded-full text-[#71717A]">
+                  {logs.length}
+                </span>
+              </button>
+
+              <div className="pt-4 text-[10px] uppercase tracking-widest text-[#71717A] px-3 mb-2 font-bold font-mono">Governance</div>
+              
+              <button
+                onClick={() => {
+                  setActiveTab("keys");
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
+                  activeTab === "keys" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
+                }`}
+              >
+                <Key className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span className="text-xs">API Gateways Vault</span>
+                <span className="ml-auto text-[9px] font-mono bg-[#18181B] border border-[#27272A] px-1.5 py-0.5 rounded-full text-[#71717A]">
+                  {keys.length}
+                </span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setActiveTab("gateway");
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
+                  activeTab === "gateway" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
+                }`}
+              >
+                <ShieldCheck className="w-4 h-4 text-cyan-400 shrink-0" />
+                <span className="text-xs">Unified API Gateway</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setActiveTab("failovers");
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
+                  activeTab === "failovers" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
+                }`}
+              >
+                <Settings2 className="w-4 h-4 text-amber-500 shrink-0" />
+                <span className="text-xs">Failover Policies</span>
+                <span className="ml-auto text-[9px] font-mono bg-[#18181B] border border-[#27272A] px-1.5 py-0.5 rounded-full text-[#71717A]">
+                  {failoverRules.filter(r => r.isEnabled).length}
+                </span>
+              </button>
+
+              <div className="pt-4 text-[10px] uppercase tracking-widest text-[#71717A] px-3 mb-2 font-bold font-mono">Organization</div>
+
+              <button
+                onClick={() => {
+                  setActiveTab("teams");
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
+                  activeTab === "teams" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
+                }`}
+              >
+                <Users className="w-4 h-4 text-cyan-400 shrink-0" />
+                <span className="text-xs">Team Privileges</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setActiveTab("billing");
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
+                  activeTab === "billing" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
+                }`}
+              >
+                <DollarSign className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span className="text-xs">Ledger & Billing</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setActiveTab("docs");
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
+                  activeTab === "docs" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
+                }`}
+              >
+                <BookOpen className="w-4 h-4 text-purple-400 shrink-0" />
+                <span className="text-xs">Reference Docs</span>
+              </button>
+            </nav>
+
+            <div className="p-4 border-t border-[#27272A]">
+              <div className="flex items-center gap-2.5 px-2.5 py-2 bg-[#18181B]/60 border border-[#27272A]/60 rounded-md">
+                <div className="w-6 h-6 rounded-full bg-cyan-950 border border-cyan-800 flex items-center justify-center text-[9px] font-bold text-cyan-400 shrink-0">
+                  {operatorEmail.slice(0, 2).toUpperCase()}
+                </div>
+                <div className="flex-1 overflow-hidden">
+                  <p className="text-[11px] font-medium truncate text-[#FAFAFA]">{operatorEmail || "Engineering Team"}</p>
+                  <p className="text-[9px] text-emerald-400 uppercase font-mono tracking-wider font-bold">STATION LOCKED</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Desktop Sidebar Navigation */}
+      <aside className="hidden lg:flex w-64 border-r border-[#27272A] flex-col bg-[#09090B] shrink-0 h-full">
         <div className="p-5 flex items-center gap-3 border-b border-[#27272A]/60">
           <div className="w-8 h-8 bg-white rounded flex items-center justify-center text-[#09090B] font-bold tracking-tighter shrink-0">
             R
@@ -396,16 +598,25 @@ export default function App() {
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col h-full overflow-hidden bg-[#09090B]">
         {/* Header / Toolbar */}
-        <header className="h-14 border-b border-[#27272A] flex items-center justify-between px-6 bg-[#09090B]/80 backdrop-blur-md shrink-0">
-          <div className="flex items-center gap-2 text-xs">
-            <span className="text-[#71717A]">Org</span>
-            <span className="text-[#27272A] font-mono">/</span>
-            <span className="font-semibold text-slate-200">production-router-v4</span>
-            <span className="px-1.5 py-0.5 rounded text-[9px] bg-[#14532D] text-[#4ADE80] font-mono font-bold border border-[#166534]">STABLE</span>
+        <header className="h-14 border-b border-[#27272A] flex items-center justify-between px-4 md:px-6 bg-[#09090B]/80 backdrop-blur-md shrink-0">
+          <div className="flex items-center gap-3 text-xs overflow-hidden">
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="p-1 px-1.5 text-neutral-400 hover:text-white rounded hover:bg-neutral-850 lg:hidden focus:outline-none shrink-0"
+              title="Open Navigation"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+            <div className="flex items-center gap-1 md:gap-2 overflow-hidden truncate">
+              <span className="text-[#71717A] hidden sm:inline">Org</span>
+              <span className="text-[#27272A] font-mono hidden sm:inline">/</span>
+              <span className="font-semibold text-slate-200 truncate font-mono">production-router-v4</span>
+              <span className="px-1.5 py-0.5 rounded text-[9px] bg-[#14532D] text-[#4ADE80] font-mono font-bold border border-[#166534] shrink-0">STABLE</span>
+            </div>
           </div>
 
-          <div className="flex items-center gap-4">
-            <div className="hidden md:flex items-center gap-2 px-2.5 py-1.5 bg-[#18181B] border border-[#27272A] rounded text-[#A1A1AA] text-[10px] font-mono w-48">
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+            <div className="hidden md:flex items-center gap-2 px-2.5 py-1.5 bg-[#18181B] border border-[#27272A] rounded text-[#A1A1AA] text-[10px] font-mono w-40 lg:w-48">
               <span className="opacity-50 text-xs">⌘</span>
               <span>K</span>
               <span className="text-[#71717A] text-[9px] pl-1 font-sans">Search across cluster</span>
@@ -413,7 +624,7 @@ export default function App() {
             <button
               onClick={handleExecuteRoute}
               disabled={isExecuting || !prompt.trim()}
-              className="px-3 py-1.5 bg-white text-black text-[11px] font-bold rounded hover:bg-[#E4E4E7] transition-all disabled:opacity-40 cursor-pointer"
+              className="px-2.5 py-1.5 bg-white text-black text-[10px] sm:text-[11px] font-bold rounded hover:bg-[#E4E4E7] transition-all disabled:opacity-40 cursor-pointer text-center"
             >
               {isExecuting ? "Executing..." : "Execute Route"}
             </button>
@@ -455,11 +666,11 @@ export default function App() {
         </section>
 
         {/* Tab Content Section */}
-        <div className="flex-1 overflow-y-auto p-6 min-h-0 bg-[#09090B]">
+        <div className="flex-1 overflow-y-auto p-4 md:p-6 min-h-0 bg-[#09090B]">
           {activeTab === "playground" && (
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start h-full">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start lg:h-full">
               {/* Sandbox Controls */}
-              <div className="lg:col-span-7 bg-[#0C0C0E] border border-[#27272A] p-5 rounded-md space-y-4">
+              <div className="lg:col-span-7 bg-[#0C0C0E] border border-[#27272A] p-4 sm:p-5 rounded-md space-y-4">
                 <div>
                   <h3 className="font-semibold text-[#FAFAFA] text-xs flex items-center gap-1.5 uppercase tracking-wider font-mono">
                     <Sparkles className="h-4 w-4 text-cyan-400" />
@@ -596,7 +807,7 @@ export default function App() {
               </div>
 
               {/* Console Trace Panels */}
-              <div className="lg:col-span-5 space-y-4 flex flex-col h-full min-h-0">
+              <div className="lg:col-span-5 space-y-4 flex flex-col lg:h-full lg:min-h-0 w-full">
                 {/* Trace Logs Stream */}
                 <div className="bg-[#0C0C0E] border border-[#27272A] p-4 rounded-md flex flex-col justify-between shrink-0">
                   <div className="flex items-center justify-between pb-2 border-b border-[#27272A]/80">
@@ -623,7 +834,7 @@ export default function App() {
 
                 {/* Response payload summary card */}
                 {promptResponse ? (
-                  <div className="bg-[#0C0C0E] border border-[#27272A] p-4 rounded-md space-y-3 flex-1 flex flex-col min-h-0 overflow-hidden">
+                  <div className="bg-[#0C0C0E] border border-[#27272A] p-4 rounded-md space-y-3 flex-1 flex flex-col min-h-[300px] lg:min-h-0 overflow-hidden">
                     <div className="flex items-center justify-between pb-2 border-b border-[#27272A]/60">
                       <div>
                         <h4 className="text-white font-bold text-xs font-mono uppercase tracking-widest">Resolved Output Payload</h4>
