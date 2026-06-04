@@ -43,11 +43,11 @@ export default function APIKeysManager({ keys, onCreateKey, onRevokeKey }: APIKe
             <div className="flex items-center space-x-2 mb-3">
               <Terminal className="h-4 w-4 text-cyan-400" />
               <h3 className="font-semibold text-[#FAFAFA] text-xs uppercase tracking-wider font-mono">
-                Generate Ingress Key
+                Create API Key
               </h3>
             </div>
             <p className="text-[11px] text-[#71717A] leading-relaxed mb-6 font-mono">
-              Create secure, cryptographically random integration keys. Use this token in client headers to authorize live calls routed by RouteLM standard endpoints.
+              Create secure API keys to integrate RouteLM into your code. Use these keys in your code headers to securely route requests.
             </p>
           </div>
 
@@ -70,7 +70,7 @@ export default function APIKeysManager({ keys, onCreateKey, onRevokeKey }: APIKe
               className="w-full flex items-center justify-center space-x-2 bg-white hover:bg-neutral-200 text-black text-xs font-bold py-1.5 rounded transition disabled:opacity-50 select-none cursor-pointer"
             >
               <Plus className="h-3.5 w-3.5" />
-              <span>{isSubmitting ? "GENERATING..." : "ISSUE API KEY"}</span>
+              <span>{isSubmitting ? "GENERATING..." : "CREATE KEY"}</span>
             </button>
           </form>
         </div>
@@ -79,10 +79,10 @@ export default function APIKeysManager({ keys, onCreateKey, onRevokeKey }: APIKe
         <div className="lg:col-span-2 bg-[#0C0C0E] border border-[#27272A] rounded p-5">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold text-white text-xs uppercase tracking-wider font-mono">
-              Provisioned API Security Keys
+              Active API Keys
             </h3>
             <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950/20 px-2.5 py-0.5 rounded-full border border-cyan-800/40">
-              {keys.length} Active Credentials
+              {keys.length} Keys Active
             </span>
           </div>
 
@@ -90,10 +90,10 @@ export default function APIKeysManager({ keys, onCreateKey, onRevokeKey }: APIKe
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b border-[#27272A] text-[9px] font-mono text-[#71717A] uppercase font-bold">
-                  <th className="pb-2.5 pt-1 pl-2">Nickname</th>
-                  <th className="pb-2.5 pt-1">Key Value</th>
+                  <th className="pb-2.5 pt-1 pl-2">Name</th>
+                  <th className="pb-2.5 pt-1">Key</th>
                   <th className="pb-2.5 pt-1">Requests</th>
-                  <th className="pb-2.5 pt-1">Provisioned</th>
+                  <th className="pb-2.5 pt-1">Created On</th>
                   <th className="pb-2.5 pt-1 pr-2 text-right">Actions</th>
                 </tr>
               </thead>
@@ -161,7 +161,7 @@ export default function APIKeysManager({ keys, onCreateKey, onRevokeKey }: APIKe
                 {keys.length === 0 && (
                   <tr>
                     <td colSpan={5} className="py-6 text-center text-[#71717A] text-xs">
-                      No credentials generated for RouteLM. Issue a gateway token above to get started.
+                      No API keys found. Create a key above to get started.
                     </td>
                   </tr>
                 )}

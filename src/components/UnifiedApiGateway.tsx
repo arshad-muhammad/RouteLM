@@ -8,8 +8,8 @@ export default function UnifiedApiGateway() {
   // Custom API sandbox tester state
   const [testEndpoint, setTestEndpoint] = useState("https://api.routelm.com/v1/route");
   const [testStrategy, setTestStrategy] = useState("BALANCED");
-  const [testPrompt, setTestPrompt] = useState("Optimize vector embeddings");
-  const [responseLog, setResponseLog] = useState<string>("// Run interactive query to simulate endpoint parsing");
+  const [testPrompt, setTestPrompt] = useState("Optimize search performance");
+  const [responseLog, setResponseLog] = useState<string>("// Enter a test prompt and click send to test the API");
   const [isSimulating, setIsSimulating] = useState(false);
 
   const copyCode = () => {
@@ -48,7 +48,7 @@ response = rlm.route(
 
   const handleRunSimulation = () => {
     setIsSimulating(true);
-    setResponseLog("// Initializing payload validation stream...\n// Mapping optimal provider connections...");
+    setResponseLog("// Checking prompt syntax...\n// Finding best backup model connection...");
     setTimeout(() => {
       const isFailed = Math.random() > 0.95; // very rare
       const latency = Math.floor(Math.random() * 120) + 70;
@@ -61,7 +61,7 @@ response = rlm.route(
         latencyMs: latency,
         tokensIn: tokensIn,
         tokensOut: tokensOut,
-        content: `Resolved optimal response for prompt: "${testPrompt}" weighted with '${testStrategy}' strategy profile tags. RouteLM automatically routed this to standard standby node.`,
+        content: `Successful response for prompt: "${testPrompt}" using '${testStrategy}' settings. RouteLM successfully routed this request to a backup server.`,
         costSavedUsd: testStrategy === "COST" ? 0.0084 : 0.0032
       };
 
@@ -81,7 +81,7 @@ response = rlm.route(
             <span>Unified RouteLM API Gateway</span>
           </h2>
           <p className="text-[11px] text-neutral-400 font-sans mt-1">
-            Publish, test, and expose one resilient gateway key across all microservices. Prevent backend exceptions from cascading.
+            Create, test, and use a single API key to connect multiple models. Keep your apps running even when providers fail.
           </p>
         </div>
         <span className="text-[10px] uppercase font-mono tracking-wider bg-cyan-950/20 border border-cyan-900 px-3 py-1 rounded text-cyan-400 font-semibold shrink-0">
@@ -95,7 +95,7 @@ response = rlm.route(
         <div className="lg:col-span-5 bg-[#0C0C0E] border border-neutral-800 p-5 rounded-lg space-y-4">
           <div className="flex items-center gap-2 pb-2 border-b border-neutral-850">
             <Sparkles className="w-4 h-4 text-cyan-400 shrink-0" />
-            <h3 className="font-mono text-[10px] uppercase font-bold tracking-widest text-white">JSON Payload Controller</h3>
+            <h3 className="font-mono text-[10px] uppercase font-bold tracking-widest text-white">Test Request Parameters</h3>
           </div>
 
           <div className="space-y-3 pt-1">
@@ -110,7 +110,7 @@ response = rlm.route(
             </div>
 
             <div className="space-y-1">
-              <label className="text-[9px] font-mono text-neutral-500 font-bold uppercase block tracking-wider">Strategy weight tag</label>
+              <label className="text-[9px] font-mono text-neutral-500 font-bold uppercase block tracking-wider">Routing Preference</label>
               <select
                 value={testStrategy}
                 onChange={(e) => setTestStrategy(e.target.value)}
@@ -124,12 +124,12 @@ response = rlm.route(
             </div>
 
             <div className="space-y-1">
-              <label className="text-[9px] font-mono text-neutral-500 font-bold uppercase block tracking-wider">Prompt Context Value</label>
+              <label className="text-[9px] font-mono text-neutral-500 font-bold uppercase block tracking-wider">Prompt Text</label>
               <textarea
                 value={testPrompt}
                 onChange={(e) => setTestPrompt(e.target.value)}
                 className="w-full bg-[#18181B] text-white border border-neutral-800 rounded p-2 text-xs font-mono outline-none h-16 resize-none"
-                placeholder="Expose prompt parameters..."
+                placeholder="Enter prompt text here..."
               />
             </div>
 
@@ -139,7 +139,7 @@ response = rlm.route(
               className="w-full py-2 bg-white hover:bg-neutral-200 text-black text-xs font-mono font-bold tracking-wider rounded transition flex items-center justify-center gap-2 select-none cursor-pointer"
             >
               <Send className="w-3.5 h-3.5" />
-              <span>{isSimulating ? "SIMULATING PIPELINE EXCLUSION..." : "SIMULATE DIRECT REQUEST"}</span>
+              <span>{isSimulating ? "SENDING TEST REQUEST..." : "SEND TEST REQUEST"}</span>
             </button>
           </div>
         </div>

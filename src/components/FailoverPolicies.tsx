@@ -43,7 +43,7 @@ export default function FailoverPolicies({ rules, onUpdateRule }: FailoverPolici
       await onUpdateRule(editedRule);
       setEditingRuleId(null);
       setEditedRule(null);
-      showSuccessFeedback("Failover threshold policy saved successfully.");
+      showSuccessFeedback("Backup route settings saved.");
     } catch (e) {
       console.error(e);
     } finally {
@@ -61,10 +61,10 @@ export default function FailoverPolicies({ rules, onUpdateRule }: FailoverPolici
       <div className="flex items-center justify-between">
         <div>
           <h2 className="font-semibold text-white text-sm uppercase tracking-wider font-mono">
-            Failover & Resilient Retries Policies
+            Backup Routing Policies
           </h2>
           <p className="text-[11px] text-[#71717A] font-mono mt-1">
-            Define secondary paths when external AI providers fail or experience high latency
+            Automatically switch to backup models when the main provider fails or gets very slow.
           </p>
         </div>
         {successMsg && (
@@ -99,7 +99,7 @@ export default function FailoverPolicies({ rules, onUpdateRule }: FailoverPolici
                     {rule.isEnabled ? <ShieldCheck className="h-4 w-4" /> : <ShieldAlert className="h-4 w-4" />}
                   </div>
                   <div>
-                    <h4 className="text-[9px] font-mono text-[#71717A] uppercase tracking-wider font-bold">Provider Route</h4>
+                    <h4 className="text-[9px] font-mono text-[#71717A] uppercase tracking-wider font-bold">Main Model</h4>
                     <p className="text-xs font-bold text-[#FAFAFA] font-mono mt-0.5">
                       {rule.primaryModel}
                     </p>
@@ -126,7 +126,7 @@ export default function FailoverPolicies({ rules, onUpdateRule }: FailoverPolici
                 <div className="flex items-center justify-between text-[11px] font-mono">
                   <span className="text-[#a1a1aa] flex items-center space-x-1.5">
                     <WifiOff className="h-3.5 w-3.5" />
-                    <span>Trigger on Network Failure</span>
+                    <span>Switch on connection error</span>
                   </span>
                   {isEditing ? (
                     <input
@@ -146,7 +146,7 @@ export default function FailoverPolicies({ rules, onUpdateRule }: FailoverPolici
                   <div className="flex items-center justify-between text-[11px] font-mono">
                     <span className="text-[#a1a1aa] flex items-center space-x-1.5">
                       <RefreshCcw className="h-3.5 w-3.5" />
-                      <span>Fallback Retry Limit</span>
+                      <span>Try model connection</span>
                     </span>
                     <span className="text-white font-bold">{activeItem.retryCount} times</span>
                   </div>
@@ -164,7 +164,7 @@ export default function FailoverPolicies({ rules, onUpdateRule }: FailoverPolici
 
                 <div className="space-y-1">
                   <div className="flex items-center justify-between text-[11px] font-mono">
-                    <span className="text-[#a1a1aa]">Latency Timeout Threshold</span>
+                    <span className="text-[#a1a1aa]">Max acceptable wait time</span>
                     <span className="text-white font-bold">
                       {activeItem.triggerOnLatencyMs} ms
                     </span>
@@ -190,7 +190,7 @@ export default function FailoverPolicies({ rules, onUpdateRule }: FailoverPolici
                 </div>
 
                 <div className="flex items-center justify-between text-[11px] font-mono text-[#71717A] pt-3.5 border-t border-[#27272A]/40">
-                  <span>Destination:</span>
+                  <span>Backup Destination:</span>
                   <span className="text-white font-semibold bg-[#18181B] px-2 py-0.5 rounded border border-[#27272A]">
                     {rule.fallbackModel}
                   </span>
@@ -211,7 +211,7 @@ export default function FailoverPolicies({ rules, onUpdateRule }: FailoverPolici
                         className="flex items-center space-x-1.5 px-3 py-1 text-[10px] font-mono bg-white hover:bg-neutral-200 text-black font-bold rounded transition cursor-pointer select-none"
                       >
                         <Save className="h-3 w-3" />
-                        <span>{isSaving ? "SAVING..." : "SAVE POLICY"}</span>
+                        <span>{isSaving ? "SAVING..." : "SAVE CHANGES"}</span>
                       </button>
                     </div>
                   ) : (
@@ -219,7 +219,7 @@ export default function FailoverPolicies({ rules, onUpdateRule }: FailoverPolici
                       onClick={() => handleStartEdit(rule)}
                       className="px-2.5 py-1 text-[10px] font-mono uppercase bg-[#18181B] border border-[#27272A] hover:bg-neutral-800 text-slate-300 rounded transition cursor-pointer select-none"
                     >
-                      Configure Policy
+                      Change settings
                     </button>
                   )}
                 </div>

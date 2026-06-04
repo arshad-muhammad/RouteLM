@@ -5,7 +5,7 @@ interface Member {
   id: string;
   name: string;
   email: string;
-  role: "Owner" | "Administrator" | "Read-Only Operator" | "Security Auditor";
+  role: "Owner" | "Administrator" | "Read-Only" | "Security Auditor";
   status: "Active" | "Pending";
 }
 
@@ -18,7 +18,7 @@ export default function TeamsManager() {
 
   const [inviteName, setInviteName] = useState("");
   const [inviteEmail, setInviteEmail] = useState("");
-  const [inviteRole, setInviteRole] = useState<Member["role"]>("Read-Only Operator");
+  const [inviteRole, setInviteRole] = useState<Member["role"]>("Read-Only");
   const [generatedInviteLink, setGeneratedInviteLink] = useState<string | null>(null);
   const [copiedLink, setCopiedLink] = useState(false);
 
@@ -59,14 +59,14 @@ export default function TeamsManager() {
         <div>
           <h2 className="text-sm font-semibold uppercase tracking-wider font-mono text-white flex items-center gap-2">
             <Users className="w-4.5 h-4.5 text-cyan-400 shrink-0" />
-            <span>Infrastructure Team Privileges</span>
+            <span>Team Permissions</span>
           </h2>
           <p className="text-[11px] text-neutral-400 font-sans mt-1">
-            Delegate workspace access, key permissions, and failover policy rule overrides to engineers with secure role scopes.
+            Invite team members and manage their system access permissions step-by-step.
           </p>
         </div>
         <span className="text-[10px] uppercase font-mono tracking-wider bg-emerald-950/20 border border-emerald-900 px-3 py-1 rounded text-emerald-400 font-semibold shrink-0">
-          Cluster: Prod-01-MFA Enforced
+          Workspace Secure Active
         </span>
       </div>
 
@@ -76,12 +76,12 @@ export default function TeamsManager() {
         <div className="lg:col-span-4 bg-[#0C0C0E] border border-neutral-800 p-5 rounded-lg space-y-4">
           <div className="flex items-center gap-2 pb-2 border-b border-neutral-850">
             <UserPlus className="w-4 h-4 text-cyan-400 shrink-0" />
-            <h3 className="font-mono text-[10px] uppercase font-bold tracking-widest text-white">Invite Cluster Operator</h3>
+            <h3 className="font-mono text-[10px] uppercase font-bold tracking-widest text-white">Invite Team Member</h3>
           </div>
 
           <form onSubmit={handleInviteSubmit} className="space-y-3.5">
             <div className="space-y-1">
-              <label className="text-[9px] font-mono text-neutral-500 font-bold uppercase block tracking-wider">Operator Name</label>
+              <label className="text-[9px] font-mono text-neutral-500 font-bold uppercase block tracking-wider">Name</label>
               <input
                 type="text"
                 value={inviteName}
@@ -92,7 +92,7 @@ export default function TeamsManager() {
             </div>
 
             <div className="space-y-1">
-              <label className="text-[9px] font-mono text-neutral-500 font-bold uppercase block tracking-wider">Workspace Connection Email</label>
+              <label className="text-[9px] font-mono text-neutral-500 font-bold uppercase block tracking-wider">Email Address</label>
               <input
                 type="email"
                 value={inviteEmail}
@@ -104,13 +104,13 @@ export default function TeamsManager() {
             </div>
 
             <div className="space-y-1">
-              <label className="text-[9px] font-mono text-neutral-500 font-bold uppercase block tracking-wider">Privilege Role Domain</label>
+              <label className="text-[9px] font-mono text-neutral-500 font-bold uppercase block tracking-wider">Permission Level</label>
               <select
                 value={inviteRole}
                 onChange={(e) => setInviteRole(e.target.value as any)}
                 className="w-full bg-[#18181B] text-white border border-neutral-800 rounded p-2 text-xs font-mono outline-none focus:border-white"
               >
-                <option value="Read-Only Operator">Read-Only Operator</option>
+                <option value="Read-Only">Read-Only</option>
                 <option value="Administrator">Administrator</option>
                 <option value="Security Auditor">Security Auditor</option>
               </select>
@@ -120,14 +120,14 @@ export default function TeamsManager() {
               type="submit"
               className="w-full py-2 bg-white hover:bg-neutral-200 text-black text-xs font-mono font-bold tracking-wider rounded transition flex items-center justify-center gap-2 select-none cursor-pointer"
             >
-              <span>SEND OPERATOR INVITE</span>
+              <span>SEND INVITE</span>
             </button>
           </form>
 
           {/* Generated Invite Copy Box */}
           {generatedInviteLink && (
             <div className="p-3.5 bg-neutral-900 border border-neutral-800 rounded-md space-y-2 mt-4 animate-fadeIn">
-              <p className="text-[9px] font-mono font-bold uppercase text-emerald-400">Invite Code Pending Registration</p>
+              <p className="text-[9px] font-mono font-bold uppercase text-emerald-400">Invite Link Generated</p>
               <div className="flex gap-1">
                 <input
                   type="text"
@@ -150,7 +150,7 @@ export default function TeamsManager() {
         {/* Existing Team Privileges Table */}
         <div className="lg:col-span-8 bg-[#0C0C0E] border border-neutral-800 p-5 rounded-lg">
           <div className="flex justify-between items-center pb-3 border-b border-neutral-850 mb-4">
-            <h3 className="font-mono text-[10px] uppercase font-bold tracking-widest text-white">Active Operator Node Registry</h3>
+            <h3 className="font-mono text-[10px] uppercase font-bold tracking-widest text-white">Current Team Members</h3>
             <span className="text-[10px] font-mono text-cyan-400 px-2 bg-cyan-950/20 rounded border border-cyan-900">
               {members.length} Members
             </span>
@@ -160,9 +160,9 @@ export default function TeamsManager() {
             <table className="w-full text-left font-mono text-[11px] border-collapse">
               <thead>
                 <tr className="border-b border-neutral-900 text-neutral-500 uppercase text-[9px] font-bold">
-                  <th className="pb-2.5">Member Namespace</th>
-                  <th className="pb-2.5">Role Domain</th>
-                  <th className="pb-2.5 text-right">MFA Shield</th>
+                  <th className="pb-2.5">Name / Email</th>
+                  <th className="pb-2.5">Permission Level</th>
+                  <th className="pb-2.5 text-right font-bold">Two-Factor</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-neutral-900">
@@ -190,7 +190,7 @@ export default function TeamsManager() {
                     <td className="py-2.5 text-right">
                       <span className="text-emerald-400 bg-emerald-950/20 border border-emerald-900 px-1.5 py-0.5 rounded text-[9px] uppercase font-bold tracking-widest inline-flex items-center gap-1">
                         <Shield className="w-2.5 h-2.5" />
-                        <span>Shield Active</span>
+                        <span>Enabled</span>
                       </span>
                     </td>
                   </tr>

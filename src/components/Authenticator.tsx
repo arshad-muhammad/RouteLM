@@ -23,12 +23,12 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
     setError(null);
     setLoadingText(
       mode === "signup"
-        ? `Provisioning credentials via direct integration to ${provider === "google" ? "Google G-Suite" : "GitHub Identity Vault"}...`
-        : `Establishing direct tunnel to ${provider === "google" ? "Google G-Suite Identity Plane" : "GitHub Auth Registry"}...`
+        ? `Preparing account via ${provider === "google" ? "Google G-Suite" : "GitHub Auth"}...`
+        : `Connecting via ${provider === "google" ? "Google G-Suite" : "GitHub Auth"}...`
     );
     
     setTimeout(() => {
-      setLoadingText("Configuring client-side hardware enclave variables...");
+      setLoadingText("Configuring workspace variables...");
       setTimeout(() => {
         setIsLoading(false);
         const demoEmail = provider === "google" ? "muhd.arshadra@gmail.com" : "arshad-dev@github.com";
@@ -40,18 +40,18 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
   const handleCredentialsSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (mode === "signup" && !operatorName.trim()) {
-      setError("Please provide your Operator Name to provision the cluster");
+      setError("Please provide your Name to register your account");
       return;
     }
     if (!email.trim()) {
-      setError("Please provide a valid operator email address");
+      setError("Please provide a valid email address");
       return;
     }
     setIsLoading(true);
     setLoadingText(
       mode === "signup"
-        ? "Provisioning cryptographic keys and establishing secure dual-layer multi-factor schema..."
-        : "Challenging passphrase with hardware security module..."
+        ? "Generating secure access credentials..."
+        : "Checking details with secure key manager..."
     );
     setError(null);
     
@@ -64,11 +64,11 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
   const handleMfaSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (passcode.length !== 6) {
-      setError("Passcode must be a 6-digit cryptographic token");
+      setError("Passcode must be a 6-digit verification code");
       return;
     }
     setIsLoading(true);
-    setLoadingText("Exchanging security tokens & establishing main routing plane...");
+    setLoadingText("Establishing connection. Building your app workspace...");
     setError(null);
 
     setTimeout(() => {
@@ -79,7 +79,7 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
 
   const triggerBypass = () => {
     setIsLoading(true);
-    setLoadingText("Bypassing verification lines (Demo Mode active)...");
+    setLoadingText("Skipping login checks for demo system...");
     setTimeout(() => {
       onLoginSuccess(email || "guest@routelm.com");
     }, 800);
@@ -112,7 +112,7 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
                 </div>
               </div>
               <div>
-                <span className="font-mono text-[9px] uppercase tracking-widest text-[#71717A] block font-bold">DOWNSTREAM GATEWAY</span>
+                <span className="font-mono text-[9px] uppercase tracking-widest text-[#71717A] block font-bold">SMART API ROUTER</span>
                 <span className="font-semibold text-sm tracking-tight text-white block">RouteLM Core Console</span>
               </div>
             </div>
@@ -120,25 +120,25 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
             {/* Core Message */}
             <div className="space-y-4">
               <h1 className="text-2xl font-light tracking-tight text-neutral-300 leading-tight">
-                Secure API Connection & <span className="font-bold text-white">Dynamic Policy Routing</span> Engine.
+                Secure AI Gateway & <span className="font-bold text-white">Smart Failover Policy</span> Engine.
               </h1>
               <p className="text-xs text-neutral-400 leading-relaxed max-w-sm">
-                Authenticate inside our secure sandboxed environment. RouteLM shields your keys from exposure while automatically resolving model rate limits in real time.
+                Log in to our safe sandbox interface. RouteLM keeps your keys private while automatically switching between backup models during downtime.
               </p>
             </div>
 
             {/* Quick Stats Grid */}
             <div className="grid grid-cols-2 gap-4 pt-4">
               <div className="bg-[#0C0C0E]/80 border border-neutral-850 p-3.5 rounded-lg space-y-1">
-                <span className="font-mono text-[8px] uppercase tracking-wider text-neutral-400 block">TUNNEL STATUS</span>
+                <span className="font-mono text-[8px] uppercase tracking-wider text-neutral-400 block">SYSTEM STATUS</span>
                 <span className="text-xs font-mono font-bold text-emerald-400 flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping" />
-                  CONNECTED
+                  ONLINE
                 </span>
               </div>
               <div className="bg-[#0C0C0E]/80 border border-neutral-850 p-3.5 rounded-lg space-y-1">
-                <span className="font-mono text-[8px] uppercase tracking-wider text-neutral-400 block">ACTIVE STANDBYS</span>
-                <span className="text-xs font-mono font-bold text-cyan-400">9 CLUSTERS ALIVE</span>
+                <span className="font-mono text-[8px] uppercase tracking-wider text-neutral-400 block">AVAILABLE BACKUPS</span>
+                <span className="text-xs font-mono font-bold text-cyan-400">9 BACKUPS READY</span>
               </div>
             </div>
           </div>
@@ -148,22 +148,22 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
             <div className="flex items-center justify-between border-b border-neutral-900 pb-1.5">
               <span className="flex items-center gap-1.5 text-neutral-400 font-bold">
                 <Terminal className="w-3.5 h-3.5 text-cyan-400" />
-                <span>CYBER THREAT LOGS</span>
+                <span>WORKSPACE LOGS</span>
               </span>
               <span className="text-[9px] text-[#A1A1AA] bg-neutral-900 px-1.5 py-0.5 rounded">0ms delay</span>
             </div>
             <div className="space-y-1.5 select-text leading-relaxed">
-              <p><span className="text-cyan-500">[SYSTEM]</span> Initializing secure zero-log enclave...</p>
-              <p><span className="text-purple-500">[SHIELD]</span> 256-bit ephemeral key agreement ready.</p>
-              <p><span className="text-amber-500">[STANDBY]</span> Flat free flat tiers mapped dynamically.</p>
-              <p><span className="text-emerald-500">[SUGGEST]</span> Input your credentials to join session console.</p>
+              <p><span className="text-cyan-500">[SYSTEM]</span> Initializing secure local session...</p>
+              <p><span className="text-purple-500">[SECURITY]</span> Local connection channel is active.</p>
+              <p><span className="text-amber-500">[ROUTING]</span> Offline-safe routers are loaded.</p>
+              <p><span className="text-emerald-500">[GUIDE]</span> Log in to continue to the control panel.</p>
             </div>
           </div>
 
           {/* Footer of Left Col */}
           <div className="z-10 pt-4 border-t border-neutral-900/60 flex items-center justify-between text-[10px] font-mono text-[#71717A]">
             <span>VER: 2.1.8-RELEASE</span>
-            <span>SHIELD ENFORCED</span>
+            <span>SECURE GATEWAY</span>
           </div>
 
         </div>
@@ -179,12 +179,12 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
                 R
               </div>
               <h2 className="text-2xl tracking-tight font-extrabold text-white">
-                {mode === "login" ? "Initialize Secure Session" : "Provision Master Cluster"}
+                {mode === "login" ? "Sign In to Workspace" : "Register a Workspace"}
               </h2>
               <p className="text-xs text-neutral-400">
                 {mode === "login" 
-                  ? "Provide your credentials to establish connection to your high-performance routing pipelines."
-                  : "Provision and register your routing nodes in our highly sandboxed cluster ecosystem."}
+                  ? "Provide your details to connect to your easy-to-use API gateway."
+                  : "Register a fresh account to configure backup models and manage latency policies."}
               </p>
             </div>
 
@@ -197,7 +197,7 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
               >
                 <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-bold block tracking-wide uppercase text-[10px]">Security Exception Handler</span>
+                  <span className="font-bold block tracking-wide uppercase text-[10px]">Error Notification</span>
                   <p className="mt-0.5 leading-relaxed text-neutral-300">{error}</p>
                 </div>
               </motion.div>
@@ -217,7 +217,7 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
                     : "text-neutral-500 hover:text-neutral-350"
                 }`}
               >
-                Secure Sign In
+                Sign In
               </button>
               <button
                 type="button"
@@ -231,7 +231,7 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
                     : "text-neutral-500 hover:text-neutral-350"
                 }`}
               >
-                Provision Cluster (Sign Up)
+                Create Account (Sign Up)
               </button>
             </div>
 
@@ -277,7 +277,7 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
             <div className="relative flex items-center justify-center py-2">
               <div className="absolute w-full border-t border-neutral-850" />
               <span className="relative px-3 bg-[#09090B] font-mono text-[8px] font-bold tracking-widest text-[#52525B] uppercase">
-                {mode === "login" ? "Or Connect Via Security Keypassphrase" : "Or Register Master Identifiers"}
+                {mode === "login" ? "Or Connect Via Email & Password" : "Or Register Your Credentials"}
               </span>
             </div>
 
@@ -295,7 +295,7 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
                     <Cpu className="w-5 h-5 text-cyan-400 absolute animate-pulse" />
                   </div>
                   <div className="space-y-1">
-                    <span className="text-xs font-mono text-cyan-450 text-cyan-400 block font-bold tracking-wider uppercase">Authenticating Gateway</span>
+                    <span className="text-xs font-mono text-cyan-450 text-cyan-400 block font-bold tracking-wider uppercase">Connecting to App</span>
                     <p className="text-[10px] text-neutral-400 max-w-xs">{loadingText}</p>
                   </div>
                 </motion.div>
@@ -306,7 +306,7 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
                   {mode === "signup" && (
                     <div className="space-y-2">
                       <label className="block text-[9px] font-mono font-bold text-neutral-400 uppercase tracking-widest">
-                        Operator Display Name
+                        Full Name
                       </label>
                       <input
                         type="text"
@@ -321,7 +321,7 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
 
                   <div className="space-y-2">
                     <label className="block text-[9px] font-mono font-bold text-neutral-400 uppercase tracking-widest">
-                      Operator Namespace Address
+                      Email Address
                     </label>
                     <input
                       type="email"
@@ -336,7 +336,7 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
                       <label className="block text-[9px] font-mono font-bold text-neutral-400 uppercase tracking-widest">
-                        Workspace Shield Passphrase
+                        Password
                       </label>
                     </div>
                     <input
@@ -344,7 +344,7 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="w-full bg-[#121214] text-xs font-mono text-white border border-neutral-800 hover:border-neutral-700 rounded px-3.5 py-3 outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/10 placeholder-neutral-600 transition"
-                      placeholder="Access security key payload..."
+                      placeholder="Enter your security password..."
                       required
                     />
                   </div>
@@ -355,7 +355,7 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
                       className="w-full py-3 bg-white hover:bg-neutral-100 text-black text-xs font-bold font-mono tracking-wider rounded transition flex items-center justify-center gap-2 select-none cursor-pointer active:scale-[0.99]"
                     >
                       <span>
-                        {mode === "login" ? "DECRYPT SECURE STATION ACCESS" : "PROVISION SECURE MASTER CLUSTER"}
+                        {mode === "login" ? "SIGN IN TO WORKSPACE" : "CREATE WORKSPACE ACCOUNT"}
                       </span>
                       <ArrowRight className="w-4 h-4 text-black shrink-0" />
                     </button>
@@ -370,12 +370,12 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
                       <ShieldCheck className="w-5 h-5 text-cyan-400" />
                     </div>
                     <h4 className="text-xs font-bold text-white uppercase tracking-wider font-mono">
-                      {mode === "login" ? "ENCRYPTED MULTI-FACTOR CHALLENGE" : "CONFIRM NEW SECURE ENCLAVE"}
+                      {mode === "login" ? "TWO-FACTOR VERIFICATION" : "CONFIRM NEW SIGNUP"}
                     </h4>
                     <p className="text-[10px] text-neutral-400 leading-relaxed max-w-sm mx-auto">
                       {mode === "login" 
-                        ? "A dynamic code challenge has been sent to your registered authenticator. Provide your 6-digit passcode."
-                        : "Safeguard this first-time device registration. Input the 6-digit dynamic passcode to authorize master keys."}
+                        ? "A 6-digit verification code has been sent to your device. Please enter it below."
+                        : "To secure your workspace, enter the 6-digit code shown in your authenticator app."}
                     </p>
                   </div>
 
@@ -401,13 +401,13 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
                       onClick={() => setStep("credentials")}
                       className="py-2.5 bg-transparent border border-neutral-800 hover:border-neutral-700 text-neutral-400 text-xs font-mono font-bold rounded transition select-none cursor-pointer text-center"
                     >
-                      PREVIOUS SCREEN
+                      BACK
                     </button>
                     <button
                       type="submit"
                       className="py-2.5 bg-white text-black hover:bg-neutral-100 text-xs font-mono font-bold rounded transition text-center select-none cursor-pointer"
                     >
-                      {mode === "login" ? "VERIFY ENCLAVE" : "AUTHORIZE CLUSTER"}
+                      {mode === "login" ? "VERIFY CODE" : "CONFIRM ACCOUNT"}
                     </button>
                   </div>
                 </motion.form>
@@ -419,11 +419,11 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-cyan-950/20 border border-cyan-900/40 rounded-full">
                 <Globe className="w-3 h-3 text-cyan-400 animate-pulse" />
                 <span className="text-[9px] font-mono text-cyan-400 uppercase tracking-wide font-bold">
-                  ROUTE-INTELLIGENT BYPASS ACTIVE
+                  DEMO SYSTEM BYPASS ACTIVE
                 </span>
               </div>
               <p className="text-[10px] text-neutral-500 leading-normal max-w-xs mx-auto">
-                Demonstration operators can bypass active challenges utilizing our secure mock cluster token values.
+                For easy testing, you can skip the code-entry requirement by using the bypass button below.
               </p>
               <button
                 type="button"
@@ -431,14 +431,14 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
                 disabled={isLoading}
                 className="text-xs text-white hover:text-cyan-400 font-bold font-mono transition mt-1 select-none cursor-pointer block mx-auto underline decoration-neutral-800 hover:decoration-cyan-400 decoration-1 underline-offset-4"
               >
-                🔒 BYPASS MFA WITH DEMO SYSTEM KEY &rarr;
+                🔒 BYPASS THE CODE & SIGN IN NOW &rarr;
               </button>
             </div>
 
           </div>
 
           <div className="absolute bottom-6 left-6 text-[10px] text-neutral-600 font-mono hidden lg:block">
-            <span>RouteLM Hardware Shield Core. Dual-Layered Keys.</span>
+            <span>RouteLM Workspace Gateway Console.</span>
           </div>
 
         </div>
