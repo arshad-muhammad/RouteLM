@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ShieldCheck, Lock, ArrowRight, Key, Sparkles, Terminal, Cpu, Shield, HelpCircle, Activity, Globe, Check, AlertCircle } from "lucide-react";
+import { ShieldCheck, Lock, ArrowRight, ArrowLeft, Key, Sparkles, Terminal, Cpu, Shield, HelpCircle, Activity, Globe, Check, AlertCircle } from "lucide-react";
 
 interface AuthenticatorProps {
   onLoginSuccess: (userEmail: string) => void;
+  onGoBack?: () => void;
 }
 
-export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
+export default function Authenticator({ onLoginSuccess, onGoBack }: AuthenticatorProps) {
   const [mode, setMode] = useState<"login" | "signup">("login");
   const [operatorName, setOperatorName] = useState("");
   const [email, setEmail] = useState("muhd.arshadra@gmail.com");
@@ -171,6 +172,18 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
         {/* Right Side: High-Fidelity Authentication Form */}
         <div className="col-span-12 lg:col-span-7 flex flex-col justify-center items-center p-6 sm:p-12 md:p-20 relative h-full overflow-y-auto">
           
+          {/* Elegant Go Back Button */}
+          {onGoBack && (
+            <button
+              type="button"
+              onClick={onGoBack}
+              className="absolute top-6 left-6 lg:top-8 lg:left-8 flex items-center gap-2 px-3 py-1.5 rounded-lg border border-neutral-800 bg-[#0C0C0E] text-neutral-400 hover:text-white hover:border-neutral-700 transition font-mono text-[11px] font-bold tracking-wider cursor-pointer group active:scale-[0.98] z-30"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform text-cyan-400" />
+              <span>PRODUCT PORTAL</span>
+            </button>
+          )}
+          
           <div className="w-full max-w-md space-y-8 my-auto relative z-10">
             
             {/* Header with Mobile display compatibility */}
@@ -203,18 +216,26 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
               </motion.div>
             )}
 
-            {/* Login & Signup Swapping Selector Tab */}
-            <div className="grid grid-cols-2 bg-[#121214] border border-neutral-800/80 p-1 rounded-md">
+            {/* Elegant Custom Sliding Tab Control */}
+            <div className="relative bg-[#0C0C0E] border border-neutral-850 p-1 rounded-xl flex items-center overflow-hidden">
+              <div className="absolute inset-y-1 left-1 right-1 grid grid-cols-2 pointer-events-none">
+                <motion.div
+                  layoutId="auth-active-tab-highlight"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  className="bg-neutral-800 border border-neutral-750/30 rounded-lg shadow-inner h-full w-full"
+                  style={{
+                    gridColumnStart: mode === "login" ? 1 : 2,
+                  }}
+                />
+              </div>
               <button
                 type="button"
                 onClick={() => {
                   setMode("login");
                   setError(null);
                 }}
-                className={`py-1.5 text-[10px] font-mono font-bold tracking-wider uppercase rounded transition ${
-                  mode === "login" 
-                    ? "bg-neutral-800 text-white shadow-sm border border-neutral-700/50" 
-                    : "text-neutral-500 hover:text-neutral-350"
+                className={`flex-1 relative z-10 py-2.5 text-[10px] font-mono font-bold tracking-widest uppercase transition-colors duration-250 select-none cursor-pointer text-center outline-none ${
+                  mode === "login" ? "text-white animate-pulse" : "text-neutral-500 hover:text-neutral-400"
                 }`}
               >
                 Sign In
@@ -225,13 +246,11 @@ export default function Authenticator({ onLoginSuccess }: AuthenticatorProps) {
                   setMode("signup");
                   setError(null);
                 }}
-                className={`py-1.5 text-[10px] font-mono font-bold tracking-wider uppercase rounded transition ${
-                  mode === "signup" 
-                    ? "bg-neutral-800 text-white shadow-sm border border-neutral-700/50" 
-                    : "text-neutral-500 hover:text-neutral-350"
+                className={`flex-1 relative z-10 py-2.5 text-[10px] font-mono font-bold tracking-widest uppercase transition-colors duration-250 select-none cursor-pointer text-center outline-none ${
+                  mode === "signup" ? "text-white animate-pulse" : "text-neutral-500 hover:text-neutral-400"
                 }`}
               >
-                Create Account (Sign Up)
+                Create Account
               </button>
             </div>
 
