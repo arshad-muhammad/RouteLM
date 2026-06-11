@@ -14,6 +14,7 @@ import {
   Legend
 } from "recharts";
 import { Zap, Activity, ShieldAlert, Cpu } from "lucide-react";
+import LatencyHeatmap from "./LatencyHeatmap";
 
 interface AnalyticsPanelProps {
   metrics: SystemMetrics;
@@ -100,6 +101,9 @@ export default function AnalyticsPanel({ metrics }: AnalyticsPanelProps) {
           </div>
         </div>
       </div>
+
+      {/* Latency Heatmap Visualization using D3 */}
+      <LatencyHeatmap />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {/* Latency History */}
