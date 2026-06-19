@@ -183,12 +183,14 @@ export default function RequestAuditLogs({ logs, onClearLogs, onRefreshLogs }: R
 
           <div className="relative">
             <button
+              id="export-logs-dropdown-trigger"
               onClick={() => setIsExportOpen(!isExportOpen)}
-              className="p-1 px-3 flex items-center space-x-1.5 bg-[#18181B] border border-[#27272A] hover:bg-zinc-800 rounded text-xs font-mono text-[#A1A1AA] transition select-none cursor-pointer font-bold"
+              className="p-1.5 px-3.5 flex items-center space-x-2 bg-[#18181B] border border-cyan-900/40 hover:border-cyan-700/60 hover:bg-cyan-950/20 rounded text-xs font-mono text-slate-200 transition select-none cursor-pointer font-bold shadow-sm"
+              title="Export Current Log List"
             >
-              <Download className="h-3 w-3 text-cyan-400" />
-              <span>EXPORT</span>
-              <ChevronDown className="h-3 w-3" />
+              <Download className="h-3.5 w-3.5 text-cyan-400" />
+              <span>EXPORT LOGS</span>
+              <ChevronDown className="h-3 w-3 text-cyan-500/80" />
             </button>
 
             {isExportOpen && (
