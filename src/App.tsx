@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { SystemMetrics, RequestLogEntry, RouteLMApiKey, FailoverRule, RoutingStrategy, RoutePromptResponse } from "./types";
 import AnalyticsPanel from "./components/AnalyticsPanel";
 import APIKeysManager from "./components/APIKeysManager";
@@ -11,7 +12,7 @@ import UnifiedApiGateway from "./components/UnifiedApiGateway";
 import BillingManager from "./components/BillingManager";
 import TeamsManager from "./components/TeamsManager";
 import DeveloperDocs from "./components/DeveloperDocs";
-import { Play, Sparkles, Terminal, Activity, DollarSign, Clock, ShieldAlert, Cpu, ExternalLink, Settings2, Code, Key, ChevronLeft, Users, Link2, BookOpen, Lock, ShieldCheck, Menu, X } from "lucide-react";
+import { Play, Sparkles, Terminal, Activity, DollarSign, Clock, ShieldAlert, Cpu, ExternalLink, Settings2, Code, Key, ChevronLeft, Users, Link2, BookOpen, Lock, ShieldCheck, Menu, X, Search, ChevronRight } from "lucide-react";
 
 export default function App() {
   const [viewMode, setViewMode] = useState<"marketing" | "auth" | "console">("marketing");
@@ -46,6 +47,10 @@ export default function App() {
   const [isExecuting, setIsExecuting] = useState(false);
   const [traceLogs, setTraceLogs] = useState<string[]>([]);
   const [promptResponse, setPromptResponse] = useState<RoutePromptResponse | null>(null);
+
+  // Command palette state inside console
+  const [isConsoleCommandPaletteOpen, setIsConsoleCommandPaletteOpen] = useState(false);
+  const [consoleCommandSearch, setConsoleCommandSearch] = useState("");
 
   // Sync telemetry metrics on mount and when interactions complete
   const loadTelemetry = async () => {
@@ -90,6 +95,18 @@ export default function App() {
     loadKeys();
     loadFailovers();
   }, []);
+
+  // Keyboard shortcut listener for console command palette
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (viewMode === "console" && (e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setIsConsoleCommandPaletteOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [viewMode]);
 
   // UseCase Actions
   const handleCreateKey = async (name: string) => {
@@ -217,6 +234,15 @@ export default function App() {
     }
   };
 
+  const getSidebarBtnClass = (tab: typeof activeTab) => {
+    const base = "w-full flex items-center gap-3 px-3 py-2 rounded-md transition-all text-left text-xs font-medium cursor-pointer border-l-2 select-none ";
+    if (activeTab === tab) {
+      return base + "bg-cyan-950/20 text-white border-cyan-500 font-semibold shadow-sm";
+    } else {
+      return base + "border-transparent text-[#A1A1AA] hover:bg-neutral-900/40 hover:text-white hover:pl-3.5";
+    }
+  };
+
   if (viewMode === "marketing") {
     return (
       <MarketingLander
@@ -292,9 +318,7 @@ export default function App() {
                   setActiveTab("playground");
                   setIsMobileMenuOpen(false);
                 }}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
-                  activeTab === "playground" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
-                }`}
+                className={getSidebarBtnClass("playground")}
               >
                 <Terminal className="w-4 h-4 text-cyan-400 shrink-0" />
                 <span className="text-xs">Router Console</span>
@@ -305,9 +329,7 @@ export default function App() {
                   setActiveTab("analytics");
                   setIsMobileMenuOpen(false);
                 }}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
-                  activeTab === "analytics" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
-                }`}
+                className={getSidebarBtnClass("analytics")}
               >
                 <Activity className="w-4 h-4 text-purple-400 shrink-0" />
                 <span className="text-xs">Telemetry Analytics</span>
@@ -318,9 +340,7 @@ export default function App() {
                   setActiveTab("connections");
                   setIsMobileMenuOpen(false);
                 }}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
-                  activeTab === "connections" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
-                }`}
+                className={getSidebarBtnClass("connections")}
               >
                 <Link2 className="w-4 h-4 text-cyan-400 shrink-0" />
                 <span className="text-xs">Provider Connections</span>
@@ -331,9 +351,7 @@ export default function App() {
                   setActiveTab("logs");
                   setIsMobileMenuOpen(false);
                 }}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
-                  activeTab === "logs" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
-                }`}
+                className={getSidebarBtnClass("logs")}
               >
                 <Code className="w-4 h-4 text-blue-400 shrink-0" />
                 <span className="text-xs">Audit Rail Logs</span>
@@ -349,9 +367,7 @@ export default function App() {
                   setActiveTab("keys");
                   setIsMobileMenuOpen(false);
                 }}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
-                  activeTab === "keys" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
-                }`}
+                className={getSidebarBtnClass("keys")}
               >
                 <Key className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span className="text-xs">API Gateways Vault</span>
@@ -365,9 +381,7 @@ export default function App() {
                   setActiveTab("gateway");
                   setIsMobileMenuOpen(false);
                 }}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
-                  activeTab === "gateway" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
-                }`}
+                className={getSidebarBtnClass("gateway")}
               >
                 <ShieldCheck className="w-4 h-4 text-cyan-400 shrink-0" />
                 <span className="text-xs">Unified API Gateway</span>
@@ -378,9 +392,7 @@ export default function App() {
                   setActiveTab("failovers");
                   setIsMobileMenuOpen(false);
                 }}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
-                  activeTab === "failovers" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
-                }`}
+                className={getSidebarBtnClass("failovers")}
               >
                 <Settings2 className="w-4 h-4 text-amber-500 shrink-0" />
                 <span className="text-xs">Failover Policies</span>
@@ -396,9 +408,7 @@ export default function App() {
                   setActiveTab("teams");
                   setIsMobileMenuOpen(false);
                 }}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
-                  activeTab === "teams" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
-                }`}
+                className={getSidebarBtnClass("teams")}
               >
                 <Users className="w-4 h-4 text-cyan-400 shrink-0" />
                 <span className="text-xs">Team Privileges</span>
@@ -409,9 +419,7 @@ export default function App() {
                   setActiveTab("billing");
                   setIsMobileMenuOpen(false);
                 }}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
-                  activeTab === "billing" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
-                }`}
+                className={getSidebarBtnClass("billing")}
               >
                 <DollarSign className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span className="text-xs">Ledger & Billing</span>
@@ -422,9 +430,7 @@ export default function App() {
                   setActiveTab("docs");
                   setIsMobileMenuOpen(false);
                 }}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
-                  activeTab === "docs" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
-                }`}
+                className={getSidebarBtnClass("docs")}
               >
                 <BookOpen className="w-4 h-4 text-purple-400 shrink-0" />
                 <span className="text-xs">Reference Docs</span>
@@ -471,9 +477,7 @@ export default function App() {
           
           <button
             onClick={() => setActiveTab("playground")}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
-              activeTab === "playground" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
-            }`}
+            className={getSidebarBtnClass("playground")}
           >
             <Terminal className="w-4 h-4 text-cyan-400 shrink-0" />
             <span className="text-xs">Router Console</span>
@@ -481,9 +485,7 @@ export default function App() {
           
           <button
             onClick={() => setActiveTab("analytics")}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
-              activeTab === "analytics" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
-            }`}
+            className={getSidebarBtnClass("analytics")}
           >
             <Activity className="w-4 h-4 text-purple-400 shrink-0" />
             <span className="text-xs">Telemetry Analytics</span>
@@ -491,9 +493,7 @@ export default function App() {
 
           <button
             onClick={() => setActiveTab("connections")}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
-              activeTab === "connections" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
-            }`}
+            className={getSidebarBtnClass("connections")}
           >
             <Link2 className="w-4 h-4 text-cyan-400 shrink-0" />
             <span className="text-xs">Provider Connections</span>
@@ -501,9 +501,7 @@ export default function App() {
 
           <button
             onClick={() => setActiveTab("logs")}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
-              activeTab === "logs" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
-            }`}
+            className={getSidebarBtnClass("logs")}
           >
             <Code className="w-4 h-4 text-blue-400 shrink-0" />
             <span className="text-xs">Audit Rail Logs</span>
@@ -516,9 +514,7 @@ export default function App() {
           
           <button
             onClick={() => setActiveTab("keys")}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
-              activeTab === "keys" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
-            }`}
+            className={getSidebarBtnClass("keys")}
           >
             <Key className="w-4 h-4 text-emerald-400 shrink-0" />
             <span className="text-xs">API Gateways Vault</span>
@@ -529,9 +525,7 @@ export default function App() {
 
           <button
             onClick={() => setActiveTab("gateway")}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
-              activeTab === "gateway" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
-            }`}
+            className={getSidebarBtnClass("gateway")}
           >
             <ShieldCheck className="w-4 h-4 text-cyan-400 shrink-0" />
             <span className="text-xs">Unified API Gateway</span>
@@ -539,9 +533,7 @@ export default function App() {
 
           <button
             onClick={() => setActiveTab("failovers")}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
-              activeTab === "failovers" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
-            }`}
+            className={getSidebarBtnClass("failovers")}
           >
             <Settings2 className="w-4 h-4 text-amber-500 shrink-0" />
             <span className="text-xs">Failover Policies</span>
@@ -554,9 +546,7 @@ export default function App() {
 
           <button
             onClick={() => setActiveTab("teams")}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
-              activeTab === "teams" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
-            }`}
+            className={getSidebarBtnClass("teams")}
           >
             <Users className="w-4 h-4 text-cyan-400 shrink-0" />
             <span className="text-xs">Team Privileges</span>
@@ -564,9 +554,7 @@ export default function App() {
 
           <button
             onClick={() => setActiveTab("billing")}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
-              activeTab === "billing" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
-            }`}
+            className={getSidebarBtnClass("billing")}
           >
             <DollarSign className="w-4 h-4 text-emerald-400 shrink-0" />
             <span className="text-xs">Ledger & Billing</span>
@@ -574,9 +562,7 @@ export default function App() {
 
           <button
             onClick={() => setActiveTab("docs")}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded transition-all text-left ${
-              activeTab === "docs" ? "bg-[#27272A]/70 text-white font-medium" : "text-[#A1A1AA] hover:bg-[#27272A]/30 hover:text-white"
-            }`}
+            className={getSidebarBtnClass("docs")}
           >
             <BookOpen className="w-4 h-4 text-purple-400 shrink-0" />
             <span className="text-xs">Reference Docs</span>
@@ -617,11 +603,14 @@ export default function App() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-4 shrink-0">
-            <div className="hidden md:flex items-center gap-2 px-2.5 py-1.5 bg-[#18181B] border border-[#27272A] rounded text-[#A1A1AA] text-[10px] font-mono w-40 lg:w-48">
+            <button
+              onClick={() => setIsConsoleCommandPaletteOpen(true)}
+              className="hidden md:flex items-center gap-2 px-2.5 py-1.5 bg-[#18181B] border border-[#27272A] hover:border-neutral-700 hover:bg-[#222226] transition-colors rounded text-[#A1A1AA] text-[10px] font-mono w-40 lg:w-48 text-left cursor-pointer"
+            >
               <span className="opacity-50 text-xs">⌘</span>
               <span>K</span>
               <span className="text-[#71717A] text-[9px] pl-1 font-sans">Search across cluster</span>
-            </div>
+            </button>
             <button
               onClick={handleExecuteRoute}
               disabled={isExecuting || !prompt.trim()}
@@ -897,6 +886,72 @@ export default function App() {
           {activeTab === "docs" && <DeveloperDocs />}
         </div>
       </main>
+
+      {/* Console Command Palette Modal overlay */}
+      <AnimatePresence>
+        {isConsoleCommandPaletteOpen && (
+          <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-start justify-center p-4 md:p-12 overflow-y-auto">
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: -20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: -20 }}
+              className="bg-[#09090B] border border-neutral-800 rounded-lg max-w-lg w-full overflow-hidden shadow-2xl mt-10 md:mt-20 flex flex-col"
+            >
+              <div className="flex items-center gap-3 px-4 py-3.5 border-b border-neutral-850 bg-[#0C0C0E]">
+                <Search className="w-4 h-4 text-neutral-500" />
+                <input
+                  type="text"
+                  value={consoleCommandSearch}
+                  onChange={(e) => setConsoleCommandSearch(e.target.value)}
+                  placeholder="Search console modules, commands or endpoints..."
+                  className="bg-transparent text-xs text-white border-none outline-none w-full placeholder-neutral-600 font-mono"
+                  autoFocus
+                />
+                <button
+                  onClick={() => setIsConsoleCommandPaletteOpen(false)}
+                  className="font-mono text-[9px] bg-neutral-900 border border-neutral-850 hover:bg-neutral-800 text-neutral-400 px-2 py-0.5 rounded cursor-pointer select-none"
+                >
+                  ESC
+                </button>
+              </div>
+
+              <div className="p-2 max-h-[350px] overflow-y-auto space-y-0.5">
+                {consoleCommands
+                  .filter((cmd) =>
+                    cmd.title.toLowerCase().includes(consoleCommandSearch.toLowerCase()) ||
+                    cmd.sub.toLowerCase().includes(consoleCommandSearch.toLowerCase())
+                  )
+                  .map((cmd, i) => (
+                    <button
+                      key={i}
+                      onClick={cmd.action}
+                      className="w-full text-left p-2.5 rounded-md flex items-center gap-3 text-xs font-mono hover:bg-neutral-900/60 transition-colors cursor-pointer group"
+                    >
+                      <div className="p-1.5 rounded bg-neutral-900 border border-neutral-800 group-hover:border-neutral-700 shrink-0">
+                        {cmd.icon}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-white font-semibold group-hover:text-cyan-400 transition-colors truncate uppercase text-[11px] tracking-wide">{cmd.title}</p>
+                        <p className="text-[10px] text-neutral-500 font-sans truncate">{cmd.sub}</p>
+                      </div>
+                      <ChevronRight className="w-3.5 h-3.5 text-neutral-700 group-hover:text-neutral-400 transition shrink-0" />
+                    </button>
+                  ))}
+                {consoleCommands.filter((cmd) =>
+                  cmd.title.toLowerCase().includes(consoleCommandSearch.toLowerCase()) ||
+                  cmd.sub.toLowerCase().includes(consoleCommandSearch.toLowerCase())
+                ).length === 0 && (
+                  <p className="text-center py-8 text-xs font-mono text-neutral-500 select-none">No console matching "{consoleCommandSearch}"</p>
+                )}
+              </div>
+              <div className="px-4 py-2 bg-[#0C0C0E] border-t border-neutral-850 flex items-center justify-between text-[9px] text-neutral-500 font-mono">
+                <span>Use up/down arrow keys or mouse click</span>
+                <span>Ctrl+K to toggle</span>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
