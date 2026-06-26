@@ -179,39 +179,39 @@ func main() {
     <div className="bg-[#09090B] text-[#FAFAFA] h-screen w-full font-sans selection:bg-neutral-800 selection:text-white overflow-y-auto">
       
       {/* Sticky Header */}
-      <header className="sticky top-0 z-40 bg-[#09090B]/80 backdrop-blur-md border-b border-neutral-900">
+      <header className="sticky top-0 z-40 bg-black/60 backdrop-blur-xl border-b border-neutral-800/60">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => onLaunchConsole("playground")}>
-            <div className="w-8 h-8 bg-white rounded flex items-center justify-center text-black font-extrabold tracking-tighter shadow-lg shadow-white/5">
+          <div className="flex items-center gap-3 cursor-pointer group" onClick={() => onLaunchConsole("playground")}>
+            <div className="w-8 h-8 bg-white rounded-md flex items-center justify-center text-black font-extrabold tracking-tighter shadow-[0_0_15px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] transition-shadow duration-300">
               R
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-sm tracking-tight text-white select-all">RouteLM</span>
-              <span className="text-[9px] font-mono tracking-wider text-neutral-500 uppercase">Dual-Plane Core</span>
+              <span className="font-bold text-sm tracking-tight text-white select-all group-hover:text-neutral-200 transition-colors">RouteLM</span>
+              <span className="text-[9px] font-mono tracking-wider text-cyan-500/80 uppercase font-semibold">Dual-Plane Core</span>
             </div>
           </div>
 
           <nav className="hidden md:flex items-center gap-7 text-xs text-neutral-400 font-medium">
-            <a href="#visualizer" className="hover:text-white transition">Core Visualizer</a>
-            <a href="#features" className="hover:text-white transition">Architecture Specs</a>
-            <a href="#failover" className="hover:text-white transition">Downtime Mitigation</a>
-            <a href="#integrations" className="hover:text-white transition">API SDKs</a>
-            <a href="#pricing" className="hover:text-white transition">Billing Saved</a>
-            <a href="#faq" className="hover:text-white transition">Developer FAQ</a>
+            <a href="#visualizer" className="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all">Core Visualizer</a>
+            <a href="#features" className="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all">Architecture Specs</a>
+            <a href="#failover" className="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all">Downtime Mitigation</a>
+            <a href="#integrations" className="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all">API SDKs</a>
+            <a href="#pricing" className="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all">Billing Saved</a>
+            <a href="#faq" className="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all">Developer FAQ</a>
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <button 
               onClick={() => setIsCommandPaletteOpen(true)}
-              className="hidden sm:flex items-center gap-2 bg-neutral-900 border border-neutral-800 rounded px-2.5 py-1.5 text-neutral-400 text-[11px] font-mono hover:bg-neutral-850 transition"
+              className="hidden sm:flex items-center gap-2 bg-[#0C0C0E] border border-neutral-800 rounded-md px-3 py-1.5 text-neutral-400 text-[11px] font-mono hover:bg-neutral-900 hover:border-neutral-700 hover:text-neutral-300 transition-all cursor-pointer group"
             >
-              <Command className="w-3.5 h-3.5" />
+              <Command className="w-3.5 h-3.5 group-hover:text-cyan-400 transition-colors" />
               <span>Search platform</span>
-              <span className="text-[9px] bg-neutral-800 px-1 py-0.5 rounded text-neutral-500 border border-neutral-700/50">⌘K</span>
+              <span className="text-[9px] bg-neutral-900 px-1 py-0.5 rounded text-neutral-500 border border-neutral-800">⌘K</span>
             </button>
             <button
               onClick={() => onLaunchConsole("playground")}
-              className="bg-white hover:bg-neutral-200 text-black text-[11px] font-bold px-3.5 py-1.5 rounded transition cursor-pointer select-none"
+              className="bg-white hover:bg-neutral-200 text-black text-[11px] font-bold px-4 py-2 rounded-md transition-all cursor-pointer select-none shadow-[0_0_10px_rgba(255,255,255,0.1)] hover:shadow-[0_0_15px_rgba(255,255,255,0.2)]"
             >
               LAUNCH CONSOLE
             </button>
@@ -220,54 +220,62 @@ func main() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-24 sm:py-32 border-b border-neutral-900 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-950 via-[#09090B] to-black">
-        <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
+      <section className="relative overflow-hidden py-24 sm:py-32 lg:py-40 border-b border-neutral-900 bg-black">
+        {/* Abstract Background Effects */}
+        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-cyan-900/20 blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-900/10 blur-[120px] pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto px-6 text-center relative z-10 flex flex-col items-center">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 bg-neutral-900 border border-neutral-800/80 px-3 py-1 rounded-full text-xs text-neutral-300 font-mono mb-6"
+            className="inline-flex items-center gap-2.5 bg-[#0C0C0E] border border-neutral-800/80 px-3.5 py-1.5 rounded-full text-[11px] text-neutral-300 font-mono mb-8 hover:bg-neutral-900 transition cursor-default shadow-sm"
           >
-            <Sparkles className="w-3 h-3 text-cyan-400 animate-pulse" />
+            <span className="flex h-2 w-2 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+            </span>
             <span>Dual-Plane Optimization engine available on v2.4.9</span>
+            <ChevronRight className="w-3.5 h-3.5 text-neutral-500" />
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white font-sans max-w-5xl mx-auto leading-[1.08]"
+            className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white to-neutral-400 max-w-5xl mx-auto leading-[1.1]"
           >
-            Connect Your Free Keys. Get a Single Resilient API.
+            Connect Your Free Keys. <br /> Get a Single Resilient API.
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="mt-6 text-sm sm:text-base text-neutral-400 max-w-2xl mx-auto leading-relaxed"
+            className="mt-8 text-base sm:text-lg text-neutral-400 max-w-2xl mx-auto leading-relaxed"
           >
-            Stop managing separate API integrations. Connect your free keys to get one unified gateway API key. If any model fails or hits its rate limit, RouteLM automatically routes requests to a healthy standby (like Gemini) with 0ms downtime.
+            Stop managing separate API integrations. Connect your free keys to get one unified gateway API key. If any model fails or hits its rate limit, RouteLM automatically routes requests to a healthy standby with 0ms downtime.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="mt-10 flex flex-wrap justify-center gap-4"
+            className="mt-12 flex flex-col sm:flex-row justify-center items-center gap-4 w-full sm:w-auto"
           >
             <button
               onClick={() => onLaunchConsole("playground")}
-              className="bg-white text-black hover:bg-neutral-200 text-xs font-bold px-6 py-3 rounded tracking-wide transition flex items-center gap-2 cursor-pointer shadow-lg shadow-white/5 font-mono select-none"
+              className="w-full sm:w-auto bg-white text-black hover:bg-neutral-200 text-xs font-bold px-7 py-3.5 rounded tracking-wide transition flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(255,255,255,0.15)] font-mono select-none"
             >
               <span>LAUNCH CLUSTER CONSOLE</span>
-              <ChevronRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4" />
             </button>
             <a
               href="#integrations"
-              className="bg-transparent hover:bg-neutral-900 text-neutral-300 hover:text-white text-xs font-mono font-bold px-6 py-3 rounded border border-neutral-800 transition flex items-center gap-2 select-none"
+              className="w-full sm:w-auto bg-transparent hover:bg-[#0C0C0E] text-neutral-300 hover:text-white text-xs font-mono font-bold px-7 py-3.5 rounded border border-neutral-700 hover:border-neutral-500 transition flex items-center justify-center gap-2 select-none"
             >
-              <Code className="w-4 h-4" />
+              <Terminal className="w-4 h-4" />
               <span>SDK DOCUMENTATION</span>
             </a>
           </motion.div>
@@ -277,60 +285,61 @@ func main() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="mt-16 flex justify-center items-center gap-8 text-[11px] font-mono text-neutral-500 max-w-3xl mx-auto border-t border-neutral-900 pt-8"
+            className="mt-20 flex flex-wrap justify-center items-center gap-8 sm:gap-12 text-[11px] font-mono text-neutral-500 max-w-3xl mx-auto pt-8 border-t border-neutral-900/50"
           >
-            <div className="flex flex-col items-center">
-              <span className="text-white font-bold text-sm">4.1ms</span>
-              <span className="uppercase text-[9px] tracking-wider font-semibold mt-0.5 text-neutral-500">Router overhead</span>
+            <div className="flex flex-col items-center gap-1.5">
+              <span className="text-white font-bold text-lg sm:text-xl tracking-tight">4.1ms</span>
+              <span className="uppercase text-[9px] tracking-wider font-semibold text-neutral-500">Router overhead</span>
             </div>
-            <div className="h-6 w-px bg-neutral-900" />
-            <div className="flex flex-col items-center">
-              <span className="text-white font-bold text-sm">82.3%</span>
-              <span className="uppercase text-[9px] tracking-wider font-semibold mt-0.5 text-neutral-500">Avg compute savings</span>
+            <div className="hidden sm:block h-8 w-px bg-neutral-900" />
+            <div className="flex flex-col items-center gap-1.5">
+              <span className="text-white font-bold text-lg sm:text-xl tracking-tight">82.3%</span>
+              <span className="uppercase text-[9px] tracking-wider font-semibold text-neutral-500">Avg compute savings</span>
             </div>
-            <div className="h-6 w-px bg-neutral-900" />
-            <div className="flex flex-col items-center">
-              <span className="text-emerald-400 font-bold text-sm">99.999%</span>
-              <span className="uppercase text-[9px] tracking-wider font-semibold mt-0.5 text-emerald-500">System reliability SLA</span>
+            <div className="hidden sm:block h-8 w-px bg-neutral-900" />
+            <div className="flex flex-col items-center gap-1.5">
+              <span className="text-emerald-400 font-bold text-lg sm:text-xl tracking-tight drop-shadow-[0_0_8px_rgba(52,211,153,0.3)]">99.999%</span>
+              <span className="uppercase text-[9px] tracking-wider font-semibold text-emerald-600/80">System reliability SLA</span>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Trusted-By Developer Brands Row */}
-      <section className="bg-black py-10 border-b border-neutral-900">
-        <div className="max-w-7xl mx-auto px-6">
-          <p className="text-center text-[9px] font-mono uppercase tracking-widest text-neutral-600 font-bold mb-8">
+      <section className="bg-black py-12 border-b border-neutral-900 relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#09090B] via-transparent to-[#09090B] pointer-events-none z-10" />
+        <div className="max-w-7xl mx-auto px-6 relative z-0">
+          <p className="text-center text-[10px] font-mono uppercase tracking-widest text-neutral-500 font-semibold mb-10">
             Engineered For Modern High-Performance Developer Stacks
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center opacity-40 hover:opacity-60 transition duration-300">
-            <span className="text-white font-bold tracking-tight font-mono text-xs">▲ VERCEL</span>
-            <span className="text-white font-bold tracking-tight font-mono text-xs">🗲 STRIPE</span>
-            <span className="text-white font-semibold tracking-tight font-mono text-xs">⧉ LINEAR</span>
-            <span className="text-white font-bold tracking-tight font-mono text-xs">□ OPENAI</span>
-            <span className="text-white font-semibold tracking-tight font-mono text-xs">◇ HASHICORP</span>
-            <span className="text-white font-bold tracking-tight font-mono text-xs">○ SUPABASE</span>
+          <div className="flex flex-wrap justify-center gap-10 sm:gap-16 items-center opacity-50 hover:opacity-100 transition-opacity duration-500">
+            <span className="text-white font-bold tracking-tight font-display text-base">▲ VERCEL</span>
+            <span className="text-white font-bold tracking-tight font-display text-base">🗲 STRIPE</span>
+            <span className="text-white font-semibold tracking-tight font-display text-base">⧉ LINEAR</span>
+            <span className="text-white font-bold tracking-tight font-display text-base">□ OPENAI</span>
+            <span className="text-white font-semibold tracking-tight font-display text-base">◇ HASHICORP</span>
+            <span className="text-white font-bold tracking-tight font-display text-base">○ SUPABASE</span>
           </div>
         </div>
       </section>
 
       {/* Animated AI Provider Routing Visualization */}
-      <section id="visualizer" className="py-24 max-w-7xl mx-auto px-6 border-b border-neutral-900">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-5 space-y-6">
-            <div className="inline-flex items-center gap-1.5 bg-cyan-950/20 text-cyan-400 px-2.5 py-1 rounded text-[10px] font-mono font-bold uppercase tracking-wider border border-cyan-900/40">
+      <section id="visualizer" className="py-32 max-w-7xl mx-auto px-6 border-b border-neutral-900">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+          <div className="lg:col-span-5 space-y-8">
+            <div className="inline-flex items-center gap-1.5 bg-cyan-950/30 text-cyan-400 px-3 py-1.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest border border-cyan-900/50 shadow-sm">
               <Layers className="w-3.5 h-3.5" />
               <span>Gateway Router Mechanics</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-[1.12]">
+            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white leading-[1.12] font-display">
               Watch Real-Time Routing Logic in Action.
             </h2>
-            <p className="text-sm text-neutral-400 leading-relaxed">
+            <p className="text-base text-neutral-400 leading-relaxed">
               Select your preferred routing strategy. When a request comes in, RouteLM instantly evaluates your API limits, detects model slowdowns, and dynamically forwards the request to the ideal active standby model.
             </p>
 
             {/* Interactive Strategy Selector */}
-            <div className="space-y-2 pt-2">
+            <div className="space-y-3 pt-2">
               {[
                 { id: "balanced", title: "Smart Automatic Mode (Auto-Fallback)", desc: "Dynamically shifts requests to the best available models to prevent rate limits." },
                 { id: "speed", title: "Absolute Speed Focus", desc: "Monitors response times and reroutes traffic if a model lags to guarantee speed." },
@@ -343,22 +352,22 @@ func main() {
                     setSelectedStrategy(item.id as any);
                     setVisualizerState("idle");
                   }}
-                  className={`w-full text-left p-3.5 rounded border transition-all flex justify-between items-start cursor-pointer ${
+                  className={`w-full text-left p-4 rounded-xl border transition-all flex justify-between items-start cursor-pointer group ${
                     selectedStrategy === item.id 
-                      ? "bg-neutral-900 border-neutral-700 shadow-lg shadow-black/30" 
-                      : "bg-transparent border-neutral-900 hover:border-neutral-850 hover:bg-neutral-950/40"
+                      ? "bg-neutral-900 border-neutral-700 shadow-[0_0_20px_rgba(34,211,238,0.05)]" 
+                      : "bg-transparent border-neutral-900 hover:border-neutral-800 hover:bg-neutral-900/40"
                   }`}
                 >
                   <div>
-                    <p className={`text-xs font-bold leading-none ${selectedStrategy === item.id ? "text-white" : "text-neutral-400"}`}>
+                    <p className={`text-sm font-bold leading-none mb-2 ${selectedStrategy === item.id ? "text-white" : "text-neutral-400 group-hover:text-neutral-300"}`}>
                       {item.title}
                     </p>
-                    <p className="text-[10px] text-neutral-500 mt-1.5 leading-relaxed font-sans font-medium">
+                    <p className="text-xs text-neutral-500 leading-relaxed font-sans font-medium pr-6">
                       {item.desc}
                     </p>
                   </div>
                   {selectedStrategy === item.id && (
-                    <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping mt-1" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse mt-1 shrink-0 shadow-[0_0_10px_rgba(34,211,238,0.5)]" />
                   )}
                 </button>
               ))}
@@ -366,7 +375,7 @@ func main() {
 
             <button
               onClick={triggerVisualizerFlow}
-              className="w-full py-3 bg-white hover:bg-neutral-250 text-black text-xs font-mono font-bold tracking-widest rounded transition cursor-pointer select-none"
+              className="w-full py-4 mt-2 bg-white hover:bg-neutral-200 text-black text-xs font-mono font-bold tracking-widest rounded-xl transition cursor-pointer select-none shadow-lg shadow-white/5"
             >
               RUN PIPELINE LOGIC
             </button>
@@ -459,16 +468,16 @@ func main() {
       </section>
 
       {/* Feature Bento Grid */}
-      <section id="features" className="py-24 bg-black border-b border-neutral-900">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto space-y-4 mb-20">
-            <span className="px-2.5 py-1 bg-neutral-900 text-neutral-400 border border-neutral-800 rounded font-mono text-[9px] uppercase tracking-wider font-bold">
+      <section id="features" className="py-24 sm:py-32 bg-black border-b border-neutral-900 relative">
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="text-center max-w-3xl mx-auto space-y-6 mb-20">
+            <span className="inline-block px-3 py-1.5 bg-[#0C0C0E] text-neutral-400 border border-neutral-800 rounded-full font-mono text-[10px] uppercase tracking-widest font-bold shadow-sm">
               Why use RouteLM?
             </span>
-            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white leading-none">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
               Simple Setup. Absolute Uptime.
             </h2>
-            <p className="text-sm text-neutral-400 leading-relaxed">
+            <p className="text-base text-neutral-400 leading-relaxed max-w-2xl mx-auto">
               Stop writing custom retry logic or handling rate limits manually. Connect your free keys once to get a single resilient API key that never fails.
             </p>
           </div>
@@ -476,69 +485,87 @@ func main() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             
             {/* Card 1 */}
-            <div className="bg-[#0C0C0E] border border-neutral-800 p-6 rounded hover:border-neutral-700 transition duration-300 space-y-4 shadow-xl">
-              <div className="w-10 h-10 bg-neutral-900 rounded border border-neutral-800 flex items-center justify-center text-cyan-400">
-                <Clock className="w-5 h-5" />
+            <div className="group bg-[#09090B] border border-neutral-800 p-8 rounded-xl hover:border-cyan-500/50 transition-all duration-300 space-y-5 shadow-lg relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative z-10">
+                <div className="w-12 h-12 bg-neutral-900 rounded-lg border border-neutral-800 flex items-center justify-center text-cyan-400 mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:bg-cyan-950/30 group-hover:border-cyan-500/30">
+                  <Clock className="w-6 h-6" />
+                </div>
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono">Instant Fallback</h3>
+                <p className="text-sm text-neutral-400 leading-relaxed mt-3">
+                  If your primary model takes too long, raises an error, or hits its rate limit, RouteLM instantly reroutes the request in 1.4 milliseconds to a healthy standby.
+                </p>
               </div>
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono">Instant Fallback</h3>
-              <p className="text-xs text-neutral-400 leading-relaxed">
-                If your primary model takes too long, raises an error, or hits its rate limit, RouteLM instantly reroutes the request in 1.4 milliseconds to a healthy standby.
-              </p>
             </div>
 
             {/* Card 2 */}
-            <div className="bg-[#0C0C0E] border border-neutral-800 p-6 rounded hover:border-neutral-700 transition duration-300 space-y-4 shadow-xl">
-              <div className="w-10 h-10 bg-neutral-900 rounded border border-neutral-800 flex items-center justify-center text-emerald-400">
-                <DollarSign className="w-5 h-5" />
+            <div className="group bg-[#09090B] border border-neutral-800 p-8 rounded-xl hover:border-emerald-500/50 transition-all duration-300 space-y-5 shadow-lg relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative z-10">
+                <div className="w-12 h-12 bg-neutral-900 rounded-lg border border-neutral-800 flex items-center justify-center text-emerald-400 mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:bg-emerald-950/30 group-hover:border-emerald-500/30">
+                  <DollarSign className="w-6 h-6" />
+                </div>
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono">Smart Cost Optimizer</h3>
+                <p className="text-sm text-neutral-400 leading-relaxed mt-3">
+                  Save up to 80% on compute costs. RouteLM automatically routes simpler queries to free, highly-capable models like Gemini 2.5 Flash, saving premium models for advanced tasks.
+                </p>
               </div>
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono">Smart Cost Optimizer</h3>
-              <p className="text-xs text-neutral-400 leading-relaxed">
-                Save up to 80% on compute costs. RouteLM automatically routes simpler queries to free, highly-capable models like Gemini 2.5 Flash, saving premium models for advanced tasks.
-              </p>
             </div>
 
             {/* Card 3 */}
-            <div className="bg-[#0C0C0E] border border-neutral-800 p-6 rounded hover:border-neutral-700 transition duration-300 space-y-4 shadow-xl">
-              <div className="w-10 h-10 bg-neutral-900 rounded border border-neutral-800 flex items-center justify-center text-purple-400">
-                <Lock className="w-5 h-5" />
+            <div className="group bg-[#09090B] border border-neutral-800 p-8 rounded-xl hover:border-purple-500/50 transition-all duration-300 space-y-5 shadow-lg relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative z-10">
+                <div className="w-12 h-12 bg-neutral-900 rounded-lg border border-neutral-800 flex items-center justify-center text-purple-400 mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:bg-purple-950/30 group-hover:border-purple-500/30">
+                  <Lock className="w-6 h-6" />
+                </div>
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono">Centralized Sandbox Key</h3>
+                <p className="text-sm text-neutral-400 leading-relaxed mt-3">
+                  Receive one single API key that securely acts as front-facing gateway. Avoid exposing your personal keys in frontend apps or microservices.
+                </p>
               </div>
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono">Centralized Sandbox Key</h3>
-              <p className="text-xs text-neutral-400 leading-relaxed">
-                Receive one single API key that securely acts as front-facing gateway. Avoid exposing your personal keys in frontend apps or microservices.
-              </p>
             </div>
 
             {/* Card 4 */}
-            <div className="bg-[#0C0C0E] border border-neutral-800 p-6 rounded hover:border-neutral-700 transition duration-300 space-y-4 shadow-xl">
-              <div className="w-10 h-10 bg-[#09090B] rounded border border-neutral-800 flex items-center justify-center text-rose-500">
-                <ShieldCheck className="w-5 h-5" />
+            <div className="group bg-[#09090B] border border-neutral-800 p-8 rounded-xl hover:border-rose-500/50 transition-all duration-300 space-y-5 shadow-lg relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-rose-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative z-10">
+                <div className="w-12 h-12 bg-neutral-900 rounded-lg border border-neutral-800 flex items-center justify-center text-rose-500 mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:bg-rose-950/30 group-hover:border-rose-500/30">
+                  <ShieldCheck className="w-6 h-6" />
+                </div>
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono">Continuous Reliability</h3>
+                <p className="text-sm text-neutral-400 leading-relaxed mt-3">
+                  Hot standby replicas remain active. Immediate failover ensures your app experiences 100% continuous runtime, even during global provider outages.
+                </p>
               </div>
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono">Continuous Reliability</h3>
-              <p className="text-xs text-neutral-400 leading-relaxed">
-                Hot standby replicas remain active. Immediate failover ensures your app experiences 100% continuous runtime, even during global provider outages.
-              </p>
             </div>
 
             {/* Card 5 */}
-            <div className="bg-[#0C0C0E] border border-neutral-800 p-6 rounded hover:border-neutral-700 transition duration-300 space-y-4 shadow-xl">
-              <div className="w-10 h-10 bg-neutral-900 rounded border border-neutral-800 flex items-center justify-center text-amber-500">
-                <Activity className="w-5 h-5" />
+            <div className="group bg-[#09090B] border border-neutral-800 p-8 rounded-xl hover:border-amber-500/50 transition-all duration-300 space-y-5 shadow-lg relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative z-10">
+                <div className="w-12 h-12 bg-neutral-900 rounded-lg border border-neutral-800 flex items-center justify-center text-amber-500 mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:bg-amber-950/30 group-hover:border-amber-500/30">
+                  <Activity className="w-6 h-6" />
+                </div>
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono">Detailed Ingress Logging</h3>
+                <p className="text-sm text-neutral-400 leading-relaxed mt-3">
+                  Review exactly how every query got parsed. Track latency differences, fallback history triggers, and token usage inside a clear dashboard console.
+                </p>
               </div>
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono">Detailed Ingress Logging</h3>
-              <p className="text-xs text-neutral-400 leading-relaxed">
-                Review exactly how every query got parsed. Track latency differences, fallback history triggers, and token usage inside a clear dashboard console.
-              </p>
             </div>
 
             {/* Card 6 */}
-            <div className="bg-[#0C0C0E] border border-neutral-800 p-6 rounded hover:border-neutral-700 transition duration-300 space-y-4 shadow-xl">
-              <div className="w-10 h-10 bg-neutral-900 rounded border border-neutral-800 flex items-center justify-center text-blue-400">
-                <Database className="w-5 h-5" />
+            <div className="group bg-[#09090B] border border-neutral-800 p-8 rounded-xl hover:border-blue-500/50 transition-all duration-300 space-y-5 shadow-lg relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative z-10">
+                <div className="w-12 h-12 bg-neutral-900 rounded-lg border border-neutral-800 flex items-center justify-center text-blue-400 mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:bg-blue-950/30 group-hover:border-blue-500/30">
+                  <Database className="w-6 h-6" />
+                </div>
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono">Cache-Aside Optimization</h3>
+                <p className="text-sm text-neutral-400 leading-relaxed mt-3">
+                  Redis caching integrated out-of-the-box. Deliver instant duplicate prompt resolution to active systems, avoiding computing overhead and saving money over time.
+                </p>
               </div>
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono">Cache-Aside Optimization</h3>
-              <p className="text-xs text-neutral-400 leading-relaxed">
-                Redis caching integrated out-of-the-box. Deliver instant duplicate prompt resolution to active systems, avoiding computing overhead and saving money over time.
-              </p>
             </div>
 
           </div>
@@ -546,30 +573,30 @@ func main() {
       </section>
 
       {/* Interactive Failover Demonstration */}
-      <section id="failover" className="py-24 max-w-7xl mx-auto px-6 border-b border-neutral-900">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <section id="failover" className="py-32 max-w-7xl mx-auto px-6 border-b border-neutral-900">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
           
-          <div className="lg:col-span-12 xl:col-span-5 space-y-6">
-            <span className="px-2.5 py-1 bg-red-950/20 text-red-400 border border-red-900/40 rounded font-mono text-[9px] uppercase tracking-wider font-bold">
+          <div className="lg:col-span-12 xl:col-span-5 space-y-8">
+            <span className="inline-block px-3 py-1.5 bg-red-950/20 text-red-400 border border-red-900/40 rounded-full font-mono text-[10px] uppercase tracking-widest font-bold shadow-sm">
               Dynamic Outage Simulator
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight">
+            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white leading-[1.12] font-display">
               Simulate a Model Interruption
             </h2>
-            <p className="text-sm text-neutral-450 leading-relaxed">
+            <p className="text-base text-neutral-400 leading-relaxed">
               Experience RouteLM's reliable fallback logic. Trigger a simulated API crash or high-latency spike, and watch RouteLM automatically detect the problem and rescue requests in milliseconds.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <button
                 onClick={() => handleRunFailoverSimulation("error")}
-                className="flex-1 py-3 px-4 bg-transparent border border-red-900/40 hover:border-red-500 text-red-400 hover:text-white hover:bg-red-950/20 text-xs font-mono font-bold tracking-wider rounded transition cursor-pointer select-none"
+                className="flex-1 py-4 px-4 bg-[#09090B] border border-red-900/40 hover:border-red-500 hover:shadow-[0_0_20px_rgba(244,63,94,0.15)] text-red-400 hover:text-white hover:bg-red-950/30 text-xs font-mono font-bold tracking-wider rounded-xl transition-all cursor-pointer select-none"
               >
                 ⚠️ CRASH PRIMARY API (502)
               </button>
               <button
                 onClick={() => handleRunFailoverSimulation("latency")}
-                className="flex-1 py-3 px-4 bg-transparent border border-amber-900/40 hover:border-amber-500 text-amber-500 hover:text-white hover:bg-amber-950/20 text-xs font-mono font-bold tracking-wider rounded transition cursor-pointer select-none"
+                className="flex-1 py-4 px-4 bg-[#09090B] border border-amber-900/40 hover:border-amber-500 hover:shadow-[0_0_20px_rgba(245,158,11,0.15)] text-amber-500 hover:text-white hover:bg-amber-950/30 text-xs font-mono font-bold tracking-wider rounded-xl transition-all cursor-pointer select-none"
               >
                 ⏱️ LATENCY SPIKE (4000MS)
               </button>
@@ -649,23 +676,23 @@ func main() {
       </section>
 
       {/* Developer Integration Code Blocks */}
-      <section id="integrations" className="py-24 bg-black border-b border-neutral-900">
+      <section id="integrations" className="py-32 bg-[#09090B] border-b border-neutral-900">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
             
-            <div className="lg:col-span-5 space-y-6">
-              <span className="px-2.5 py-1 bg-neutral-900 text-neutral-300 border border-neutral-800 rounded font-mono text-[9px] uppercase tracking-wider font-bold">
+            <div className="lg:col-span-5 space-y-8">
+              <span className="inline-block px-3 py-1.5 bg-[#121214] text-neutral-300 border border-neutral-800 rounded-full font-mono text-[10px] uppercase tracking-widest font-bold shadow-sm">
                 SDK Documentation
               </span>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight">
+              <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white leading-[1.12] font-display">
                 Integrates in Three Lines of Code.
               </h2>
-              <p className="text-sm text-neutral-400 leading-relaxed">
+              <p className="text-base text-neutral-400 leading-relaxed">
                 Replace your complex multi-provider API clients. Initialize with a single RouteLM key to automatically protect your application from rate-limits or system crash downs.
               </p>
 
               {/* Language Selector */}
-              <div className="flex flex-wrap gap-2 pt-2">
+              <div className="flex flex-wrap gap-2 pt-4">
                 {[
                   { id: "node", label: "NODEJS / TS" },
                   { id: "python", label: "PYTHON" },
@@ -678,10 +705,10 @@ func main() {
                       setActiveCodeTab(lang.id as any);
                       setCopiedCodeTab(false);
                     }}
-                    className={`px-3 py-1.5 text-[10px] font-mono rounded border transition cursor-pointer font-bold select-none ${
+                    className={`px-4 py-2 text-[10px] font-mono rounded-lg border transition-all cursor-pointer font-bold select-none ${
                       activeCodeTab === lang.id 
-                        ? "bg-white text-black border-white" 
-                        : "bg-transparent text-neutral-400 border-neutral-800 hover:border-neutral-700"
+                        ? "bg-white text-black border-white shadow-lg shadow-white/10" 
+                        : "bg-transparent text-neutral-400 border-neutral-800 hover:border-neutral-700 hover:bg-neutral-900"
                     }`}
                   >
                     {lang.label}
